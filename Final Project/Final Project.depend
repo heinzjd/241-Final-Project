@@ -1,0 +1,26 @@
+# depslib dependency file v1.0
+1533049761 source:/media/jeff/Files/CIS 241/Final Project/main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"sha1.h"
+
+1533009662 /media/jeff/Files/CIS 241/Final Project/sha1.h
+	<stdint.h>
+
+1533009393 source:/media/jeff/Files/CIS 241/Final Project/sha1.c
+	"sha1.h"
+
+1533069239 source:/media/jeff/Files/School/CIS 241/Final Project/main.c
+	<stdbool.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"sha1.h"
+
+1533051342 /media/jeff/Files/School/CIS 241/Final Project/sha1.h
+	<stdint.h>
+
+1533051342 source:/media/jeff/Files/School/CIS 241/Final Project/sha1.c
+	"sha1.h"
+

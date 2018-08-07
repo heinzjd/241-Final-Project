@@ -9,6 +9,9 @@ int front = 0;
 int rear = -1;
 int itemCount = 0;
 
+char *files[]= {"Directory.txt", "a.txt", "b.txt", "c.txt", "d.txt"};
+
+//, a.txt, b.txt, c.txt, d.txt
 
 struct TreeNode
 {
@@ -47,41 +50,48 @@ int main()
     size_t len = 0;
     ssize_t read;
 
-    fp = fopen("Directory.txt", "r");
-    if (fp == NULL)
-        exit(EXIT_FAILURE);
 
-    lines = 0;
+    int j = 0;
 
-    //read all the lines to get total number of lines
-    while ((read = getline(&line, &len, fp)) != -1)
+    for(j = 0; j < 5; j++)
     {
-        lines++;
-    }
+        fp = fopen(files[j], "r");
+        if (fp == NULL)
+            exit(EXIT_FAILURE);
 
+        //read all the lines to get total number of lines
+        while ((read = getline(&line, &len, fp)) != -1)
+        {
+            lines++;
+        }
+        //close the file
+        fclose(fp);
+    }
     //create a node array of tree node pointers the length of the file
     TreeNodePtr nodeArray[lines];
 
     printf("%d lines in the file\n", lines);
 
-    //open file again
-    fp = fopen("Directory.txt", "r");
-    if (fp == NULL)
-        exit(EXIT_FAILURE);
-
-    //read each line of the file and get a hash for it
-    while ((read = getline(&line, &len, fp)) != -1)
+    for(j = 0; j < 5; j++)
     {
-        //printf("\n%s\n", line);
-        newSha(line, hashString);
-        //printf("%s", hashString);
-        //put each line as a new node into a queue array
-        enQueue(newNode(line, hashString), nodeArray);
+        //open file again
+        fp = fopen(files[j], "r");
+        if (fp == NULL)
+            exit(EXIT_FAILURE);
+
+        //read each line of the file and get a hash for it
+        while ((read = getline(&line, &len, fp)) != -1)
+        {
+            //printf("\n%s\n", line);
+            newSha(line, hashString);
+            //printf("%s", hashString);
+            //put each line as a new node into a queue array
+            enQueue(newNode(line, hashString), nodeArray);
+        }
+
+        //close the file
+        fclose(fp);
     }
-
-    //close the file
-    fclose(fp);
-
     //create three nodes for finding the root node
     TreeNodePtr first;
     TreeNodePtr second;
@@ -89,7 +99,7 @@ int main()
 
     while(! isEmpty())
     {
-    //dequeue the first and second nodes to add for their parent node
+        //dequeue the first and second nodes to add for their parent node
         first = deQueue(nodeArray);
 
         second = deQueue(nodeArray);
@@ -117,7 +127,7 @@ int main()
                        hashString);
 
 
-           //set first and second to be temps left and right children
+        //set first and second to be temps left and right children
         temp->leftPtr=first;
         temp->rightPtr=second;
 
@@ -217,8 +227,8 @@ void newSha(char* line, char* hashString)
     if (err)
     {
         fprintf(stderr,
-            "SHA1Result Error %d, could not compute message digest.\n",
-            err );
+                "SHA1Result Error %d, could not compute message digest.\n",
+                err );
     }
     else
     {
